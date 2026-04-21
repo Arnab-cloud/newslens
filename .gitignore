@@ -1,0 +1,21 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+
+
+# --- Project/Data ---
+# Exclude model weights and local data
+adapter_output/
+data/
+*.csv
+*.pt
+*.pth
+*.bin
