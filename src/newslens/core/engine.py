@@ -1,11 +1,16 @@
-import torch
-from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
 from newslens.core.config import settings
 
 
 class InferenceEngine:
+    try:
+        import torch
+        from peft import PeftModel
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+    except ImportError:
+        raise ImportError(
+            "torch is not installed. Please install it with: pip install 'newslens[local]'"
+        )
+
     def __init__(self, adapter_path: str | None = None):
         self.device = settings.device if torch.cuda.is_available() else "cpu"
         self.adapter_path = adapter_path or settings.adapter_path
