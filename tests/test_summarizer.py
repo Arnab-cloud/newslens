@@ -1,6 +1,6 @@
 import pytest
-from mock_engine import MockEngine
 
+from newslens.core.mock_engine import MockEngine
 from newslens.core.model import NewsLens
 
 

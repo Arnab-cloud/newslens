@@ -3,7 +3,7 @@ import json
 import pytest
 from mock_engine import MockEngine
 
-from newslens.agents.mcp import create_mcp_server
+from newslens.agents.mcp_server import create_mcp_server
 from newslens.core.model import NewsLens
 
 

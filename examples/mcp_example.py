@@ -1,6 +1,6 @@
-from newslens.agents.mcp import create_mcp_server
+from newslens.agents.mcp_server import create_mcp_server
+from newslens.core.mock_engine import MockEngine
 from newslens.core.model import NewsLens
-from tests.mock_engine import MockEngine
 
 mock_engine = MockEngine()
 lens = NewsLens(engine=mock_engine)

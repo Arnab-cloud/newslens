@@ -1,32 +1,7 @@
-# from fastapi.testclient import TestClient
-# from mock_engine import MockEngine
-
-# from newslens.core.model import NewsLens
-# from newslens.server.api import app, lens_storage
-
-# # Inject mock into the app storage
-# lens_storage["model"] = NewsLens(engine=MockEngine())
-
-# client = TestClient(app)
-
-
-# def test_api_summarize():
-#     response = client.post("/summarize", json={"text": "This is a test"})
-#     print(response.json())
-#     assert response.status_code == 200
-#     assert "summary" in response.json()
-#     assert "MOCK_SUMMARY" in response.json()["summary"]
-
-
-# def test_api_health():
-#     response = client.get("/health")
-#     assert response.status_code == 200
-#     assert response.json()["status"] == "ready"
-#
 import pytest
 from fastapi.testclient import TestClient
-from mock_engine import MockEngine
 
+from newslens.core.mock_engine import MockEngine
 from newslens.core.model import NewsLens
 from newslens.server.api import app, lens_storage
 
