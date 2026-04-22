@@ -8,7 +8,6 @@ class SummarizeRequest(BaseModel):
     top_p: float | None = Field(0.9, ge=0.0, le=1.0)
 
 
-# V2 adds the URL field from your previous implementation
 class SummarizeRequestV2(SummarizeRequest):
     # article: str | None = Field("", description="The news article to summarize")
     url: str | None = Field("", description="The news article url to be summarized")
