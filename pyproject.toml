@@ -1,7 +1,7 @@
 [project]
 name = "newslens"
 version = "0.1.4"
-description = "Add your description here"
+description = "Utility to use News-Summarization model as a funcion, tool, mcp or A2A server."
 readme = "README.md"
 authors = [
     { name = "Arnab Santra", email = "arnabsantra248@gmail.com" }
