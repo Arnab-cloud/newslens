@@ -6,6 +6,7 @@ except ImportError:
     )
 
 
+from newslens.core.engine import InferenceEngine
 from newslens.core.model import NewsLens
 
 
@@ -27,6 +28,7 @@ def create_mcp_server(lens: NewsLens):
 
 def serve_mcp(adapter_path: str | None = None):
     """Entry point to launch the MCP server via CLI."""
-    lens = NewsLens(adapter_path=adapter_path)
+    engine = InferenceEngine(adapter_path=adapter_path)
+    lens = NewsLens(engine)
     server = create_mcp_server(lens)
     server.run(transport="stdio")

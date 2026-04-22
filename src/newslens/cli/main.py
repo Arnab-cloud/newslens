@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -16,25 +15,25 @@ def serve(
         "a2a", help="Mode to run: 'a2a' (REST API) or 'mcp' (MCP Server)"
     ),
     port: int = typer.Option(8000, help="Port to run the service on"),
-    adapter: Optional[str] = typer.Option(None, help="Path to custom LoRA adapter"),
+    adapter: str = typer.Option("./my_adapter", help="Path to custom LoRA adapter"),
 ):
 
-    engine = InferenceEngine(adapter_path="./my_adapter")
+    engine = InferenceEngine(adapter_path=adapter)
     lens = NewsLens(engine=engine)
 
     """Start the NewsLens inference service."""
     if mode == "a2a":
         import uvicorn
 
-        from ..server.api import app as fastapi_app
-        from ..server.api import lens_storage
+        from newslens.server.api import app as fastapi_app
+        from newslens.server.api import lens_storage
 
         lens_storage["model"] = lens
 
         print(f"🚀 Starting A2A server on port {port}...")
         uvicorn.run(fastapi_app, host="0.0.0.0", port=port)
     elif mode == "mcp":
-        from ..agents.mcp import create_mcp_server
+        from newslens.agents.mcp import create_mcp_server
 
         print("🔗 Starting MCP server (stdio)...")
         server = create_mcp_server(lens)

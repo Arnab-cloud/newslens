@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from mock_engine import MockEngine
 
@@ -16,10 +18,23 @@ async def test_mcp_tool_registration():
 
     # 3. Verify tool exists
     # FastMCP exposes a dictionary of tools
-    assert "summarize_news" in await mcp_server.list_tools()
+    assert "summarize_news" in "".join(
+        [tool.model_dump_json() for tool in await mcp_server.list_tools()]
+    )
 
     # 4. Invoke tool manually to verify logic
     result = await mcp_server.call_tool(
         "summarize_news", arguments={"text": "Test article"}
     )
-    assert "MOCK_SUMMARY" in result
+
+    if isinstance(result, dict):
+        assert "MOCK_SUMMARY" in json.dumps(result)
+    else:
+        assert "MOCK_SUMMARY" in "".join(
+            [
+                json.dumps(res)
+                if isinstance(res, dict)
+                else "".join([r.model_dump_json() for r in res])
+                for res in list(result)
+            ]
+        )
