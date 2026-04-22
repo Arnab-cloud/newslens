@@ -10,7 +10,6 @@ from newslens.core.model import NewsLens
 
 
 def create_mcp_server(lens: NewsLens):
-    # Initialize the FastMCP server
     mcp = FastMCP("NewsLens Service")
 
     @mcp.tool()
@@ -19,7 +18,6 @@ def create_mcp_server(lens: NewsLens):
         Summarizes a news article using the local Qwen-0.6B LoRA model.
         Extremely fast and context-aware.
         """
-        # We use the async version to keep the MCP server responsive
         return await lens.asummarize(text)
 
     return mcp

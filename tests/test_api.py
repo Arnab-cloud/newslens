@@ -6,15 +6,11 @@ from newslens.core.model import NewsLens
 from newslens.server.api import app, lens_storage
 
 
-# 1. Setup the client
-# We inject the mock engine before initializing the TestClient
 @pytest.fixture(autouse=True)
 def setup_mock_model():
     mock_engine = MockEngine()
-    # Ensure the model is injected into the server's storage
     lens_storage["model"] = NewsLens(engine=mock_engine)
     yield
-    # Cleanup after tests
     lens_storage.clear()
 
 
@@ -30,7 +26,6 @@ def test_api_health():
 
 def test_api_summarize_success():
     """Test standard summarization with the correct schema."""
-    # Note: Using 'article' as defined in SummarizeRequest schema
     payload = {
         "article": "This is a test article content.",
         "max_tokens": 512,

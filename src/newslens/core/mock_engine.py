@@ -24,6 +24,5 @@ class MockEngine(EngineProtocol):
 
     @property
     def tokenizer(self):
-        # We assume the remote server uses the same tokenizer
-        # or we return the local one for prompt formatting
+        # Here we return a mock tockenizer
         return MockTockenizer()

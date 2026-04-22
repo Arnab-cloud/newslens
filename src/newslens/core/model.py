@@ -30,14 +30,12 @@ class NewsLens:
         return await loop.run_in_executor(self.executor, func)
 
     def summarize_batch(self, texts: list[str], **kwargs) -> list[str]:
-        """Simple loop for batching.
-        Note: Future versions could implement true continuous batching here.
-        """
+        """Simple loop for batching."""
         return [self.summarize(t, **kwargs) for t in texts]
 
     async def asummarize_batch(self, texts: list[str], **kwargs) -> list[str]:
         """
-        High-performance batch summarization using asyncio.gather.
+        Batch summarization using asyncio.gather.
         This schedules all tasks concurrently on the executor.
         """
         tasks = [self.asummarize(text, **kwargs) for text in texts]
@@ -49,7 +47,6 @@ class NewsLens:
             {"role": "system", "content": "You are a professional news summarizer."},
             {"role": "user", "content": f"Summarize this article:\n\n{text}"},
         ]
-        # In 2026, we use the tokenizer's built-in chat template logic
         return self.engine.tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )

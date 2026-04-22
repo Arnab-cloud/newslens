@@ -30,12 +30,12 @@ def serve(
 
         lens_storage["model"] = lens
 
-        print(f"🚀 Starting A2A server on port {port}...")
+        print(f"Starting A2A server on port {port}...")
         uvicorn.run(fastapi_app, host="0.0.0.0", port=port)
     elif mode == "mcp":
         from newslens.agents.mcp_server import create_mcp_server
 
-        print("🔗 Starting MCP server (stdio)...")
+        print("Starting MCP server (stdio)...")
         server = create_mcp_server(lens)
         server.run(transport="stdio")
 

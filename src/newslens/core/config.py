@@ -16,7 +16,7 @@ class NewsLensConfig(BaseSettings):
 
     # Optimization
     use_flash_attention: bool = True
-    load_in_half_precision: bool = True  # FP16 for your 3060
+    load_in_half_precision: bool = True  # FP16 for RTX 3060
 
     max_workers: int = 2
 

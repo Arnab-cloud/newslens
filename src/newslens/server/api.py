@@ -72,24 +72,12 @@ async def health_check():
 
 @app.post("/summarize", response_model=SummarizeResponse)
 async def summarize(request: SummarizeRequest, lens: NewsLens = Depends(get_lens)):
-    # Note: Logic assumes _summarize_sync returns tuple (text, in_len, out_len)
-    # You may need to adapt your core model's return signature slightly.
     summary = await lens.asummarize(
         request.article, max_tokens=request.max_tokens, temperature=request.temperature
     )
     return SummarizeResponse(
         summary=summary, input_length=len(request.article), output_length=len(summary)
     )
-
-
-# @app.post("/summarize/batch")
-# async def summarize_batch(
-#     request: BatchSummarizeRequest, lens: NewsLens = Depends(get_lens)
-# ):
-#     """Handles multiple articles in parallel."""
-#     # Logic is handled by our core batching method
-#     summaries = lens.summarize_batch(request.articles, temperature=request.temperature)
-#     return {"summaries": summaries, "count": len(summaries)}
 
 
 @app.post("/summarize/batch", response_model=BatchSummarizeResponse)

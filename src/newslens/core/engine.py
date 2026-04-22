@@ -18,11 +18,9 @@ class InferenceEngine:
         print(f"🔹 Loading model on {self.device}...")
         self.tokenizer = AutoTokenizer.from_pretrained(settings.base_model_name)
 
-        # Ensure pad token is set
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
-        # Load Base Model
         model = AutoModelForCausalLM.from_pretrained(
             settings.base_model_name,
             torch_dtype=torch.float16
@@ -31,7 +29,6 @@ class InferenceEngine:
             device_map=self.device,
         )
 
-        # Attach Adapter if provided
         if self.adapter_path:
             print(f"🔹 Attaching adapters from {self.adapter_path}...")
             self.model = PeftModel.from_pretrained(model, self.adapter_path)
@@ -44,7 +41,6 @@ class InferenceEngine:
     def generate(self, prompt: str, **kwargs):
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
 
-        # Merge defaults with overrides
         gen_config = {
             "max_new_tokens": kwargs.get("max_tokens", settings.default_max_tokens),
             "temperature": kwargs.get("temperature", settings.default_temperature),
@@ -56,6 +52,5 @@ class InferenceEngine:
         with torch.no_grad():
             output_tokens = self.model.generate(**inputs, **gen_config)
 
-        # Decode only the new tokens
         new_tokens = output_tokens[0][inputs.input_ids.shape[-1] :]
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True)

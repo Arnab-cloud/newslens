@@ -19,7 +19,6 @@ runner = CliRunner()
 
 
 def test_cli_serve_help():
-    # Verify the CLI help menu is accessible
     result = runner.invoke(app, ["serve", "--help"])
     assert result.exit_code == 0
     # assert "Start the NewsLens inference service" in result.stdout
